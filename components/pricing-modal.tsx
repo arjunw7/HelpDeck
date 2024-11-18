@@ -15,6 +15,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
 import { initializePaddle, type Paddle } from '@paddle/paddle-js';
 import { usePaddlePrices } from "@/hooks/use-paddle-prices";
+import { useTheme } from "next-themes";
 
 interface PricingModalProps {
   open: boolean;
@@ -28,7 +29,7 @@ export function PricingModal({ open, onOpenChange, currentPlanId }: PricingModal
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
   const [paddle, setPaddle] = useState<Paddle>();
   const { monthly: monthlyPrices, yearly: yearlyPrices, isLoading: isPricesLoading, error: pricesError } = usePaddlePrices();
-  
+  const { theme } = useTheme();
   const token = process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === 'sandbox' 
     ? process.env.NEXT_PUBLIC_PADDLE_SANDBOX_WEBHOOK_SECRET 
     : process.env.PADDLE_PRODUCTION_WEBHOOK_SECRET;
@@ -70,7 +71,7 @@ export function PricingModal({ open, onOpenChange, currentPlanId }: PricingModal
         settings: {
           successUrl: `${window.location.origin}/subscription/success`,
           displayMode: 'inline',
-          theme: 'light',
+          theme,
         }
       });
     } catch (error) {
