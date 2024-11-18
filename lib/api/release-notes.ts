@@ -16,16 +16,8 @@ export interface ReleaseNote {
   };
 }
 
-export async function getReleaseNotes() {
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("org_id")
-    .single();
-
-  if (!profile?.org_id) {
-    throw new Error("Organization not found");
-  }
-
+export async function getReleaseNotes(orgId: string) {
+  
   const { data, error } = await supabase
     .from("release_notes")
     .select(`
@@ -34,7 +26,7 @@ export async function getReleaseNotes() {
         full_name
       )
     `)
-    .eq("org_id", profile.org_id)
+    .eq("org_id", orgId)
     .order("created_at", { ascending: false });
 
   if (error) throw error;

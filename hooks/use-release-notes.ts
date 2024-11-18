@@ -5,7 +5,7 @@ import { getReleaseNotes, createReleaseNote, getReleaseNote, updateReleaseNote }
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 
-export function useReleaseNotes() {
+export function useReleaseNotes(orgId: string) {
   const queryClient = useQueryClient();
 
   const {
@@ -14,7 +14,7 @@ export function useReleaseNotes() {
     error,
   } = useQuery({
     queryKey: ["release-notes"],
-    queryFn: getReleaseNotes,
+    queryFn: () => getReleaseNotes(orgId),
   });
 
   const createMutation = useMutation({

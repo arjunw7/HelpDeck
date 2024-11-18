@@ -18,7 +18,6 @@ export async function getUserOrganization() {
         error: 'No authenticated user'
       };
     }
-
     // Get user profile with organization ID
     const { data: profile, error: profileError } = await supabase
       .from('profiles')

@@ -36,7 +36,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
         if (data.organizationId) {
           const { data: org } = await supabase
             .from('organizations')
-            .select('name,id')
+            .select('name,id,logo')
             .eq('id', data.organizationId)
             .single();
 
@@ -88,7 +88,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       
       <GridTemplate 
         settings={settings}
-        organizationName={organization.name}
+        organization={organization}
         currentView="article"
         selectedArticleId={articleId}
         onViewChange={(view) => {

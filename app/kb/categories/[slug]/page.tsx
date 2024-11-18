@@ -31,11 +31,10 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
         if (data.settings) {
           setSettings(data.settings);
         }
-
         if (data.organizationId) {
           const { data: org } = await supabase
             .from('organizations')
-            .select('name')
+            .select('id, name, logo')
             .eq('id', data.organizationId)
             .single();
 
@@ -84,7 +83,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
     <KnowledgeBaseLayout settings={settings}>
       <GridTemplate 
         settings={settings}
-        organizationName={organization.name}
+        organization={organization}
         currentView="collection"
         selectedCategoryId={categoryId}
         onViewChange={() => router.push('/kb')}

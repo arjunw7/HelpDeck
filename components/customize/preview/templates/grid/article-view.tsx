@@ -17,6 +17,7 @@ interface ArticleViewProps {
   isPreview?: boolean;
   activeDevice?: string;
   onCategoryClick: (slug: string) => void;
+  organization: any,
 }
 
 export function ArticleView({ 
@@ -26,9 +27,10 @@ export function ArticleView({
   isPreview = false,
   activeDevice,
   onCategoryClick,
+  organization,
 }: ArticleViewProps) {
-  const { articles } = useArticles();
-  const { categories } = useCategories();
+  const { articles } = useArticles(organization?.id);
+  const { categories } = useCategories(organization?.id);
 
   const getArticle = () => {
     if (isPreview) {

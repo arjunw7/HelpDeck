@@ -30,7 +30,6 @@ export default function PublicKnowledgeBasePage() {
         if (data.settings) {
           setSettings(data.settings);
         }
-
         if (data.organizationId) {
           const { data: org, error } = await supabase
             .from('organizations')
@@ -86,7 +85,7 @@ export default function PublicKnowledgeBasePage() {
     <KnowledgeBaseLayout settings={settings}>
       <GridTemplate 
         settings={settings}
-        organizationName={organization.name}
+        organization={organization}
         currentView="home"
         onViewChange={() => {}}
         isPreview={false}

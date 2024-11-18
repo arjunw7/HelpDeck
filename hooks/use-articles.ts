@@ -5,7 +5,7 @@ import { getArticles, createArticle, getArticle, updateArticle } from "@/lib/api
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 
-export function useArticles() {
+export function useArticles(orgId: string) {
   const queryClient = useQueryClient();
 
   const {
@@ -14,7 +14,7 @@ export function useArticles() {
     error,
   } = useQuery({
     queryKey: ["articles"],
-    queryFn: getArticles,
+    queryFn: () => getArticles(orgId),
   });
 
   const createMutation = useMutation({

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { SubscribeModal } from "@/components/knowledge-base/shared/subscribe-modal";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useRouter } from "next/navigation";
 
 interface HeroProps {
   settings: KnowledgeBaseSettings;
@@ -18,6 +19,7 @@ interface HeroProps {
 }
 
 export function Hero({ settings, onSearch, organizationName, isChangeLog, isPreview, activeDevice }: HeroProps) {
+  const router = useRouter();
   const [showSubscribeModal, setShowSubscribeModal] = useState(false);
   const getTextColor = (bgColor: string) => {
     const rgb = hexToRgb(bgColor);
@@ -87,7 +89,7 @@ export function Hero({ settings, onSearch, organizationName, isChangeLog, isPrev
       <div className="relative">
         <header className="px-6 py-4">
           <div className="mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 cursor-pointer" onClick={() => router.push(`/kb`)}>
               {settings.general.logo ? (
                 <Image
                   src={settings.general.logo}

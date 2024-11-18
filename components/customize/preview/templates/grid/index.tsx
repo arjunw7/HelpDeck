@@ -10,7 +10,7 @@ import { Footer } from "./footer";
 
 interface GridTemplateProps {
   settings: KnowledgeBaseSettings;
-  organizationName?: string;
+  organization?: any;
   currentView: "home" | "collection" | "article" | "changelog-list" | "changelog";
   onViewChange: (view: "home" | "collection" | "article" | "changelog-list" | "changelog") => void;
   selectedCategoryId?: string;
@@ -27,7 +27,7 @@ interface GridTemplateProps {
 
 export function GridTemplate({
   settings,
-  organizationName,
+  organization,
   currentView,
   onViewChange,
   selectedCategoryId,
@@ -48,7 +48,7 @@ export function GridTemplate({
           <>
             <Hero
               settings={settings}
-              organizationName={organizationName}
+              organizationName={organization?.name}
               isPreview={isPreview}
               activeDevice={activeDevice}
             />
@@ -59,6 +59,7 @@ export function GridTemplate({
               onViewChange={onViewChange}
               isPreview={isPreview}
               activeDevice={activeDevice}
+              organization={organization}
             />
           </>
         );
@@ -67,7 +68,7 @@ export function GridTemplate({
           <>
             <Hero
               settings={settings}
-              organizationName={organizationName}
+              organizationName={organization?.name}
               isPreview={isPreview}
               activeDevice={activeDevice}
             />
@@ -78,6 +79,7 @@ export function GridTemplate({
               isPreview={isPreview}
               activeDevice={activeDevice}
               onCategoryClick={onCategoryClick}
+              organization={organization}
             />
           </>
         );
@@ -86,7 +88,7 @@ export function GridTemplate({
           <>
             <Hero
               settings={settings}
-              organizationName={organizationName}
+              organizationName={organization?.name}
               isChangeLog
               isPreview={isPreview}
               activeDevice={activeDevice}
@@ -97,6 +99,7 @@ export function GridTemplate({
               isPreview={isPreview}
               activeDevice={activeDevice}
               onViewChange={onViewChange}
+              organization={organization}
             />
           </>
         );
@@ -105,7 +108,7 @@ export function GridTemplate({
           <>
             <Hero
               settings={settings}
-              organizationName={organizationName}
+              organizationName={organization?.name}
               isChangeLog
               isPreview={isPreview}
               activeDevice={activeDevice}
@@ -113,6 +116,7 @@ export function GridTemplate({
             <ChangeLogView
               settings={settings}
               changeLogId={selectedRelaseNoteId}
+              organization={organization}
               isPreview={isPreview}
               activeDevice={activeDevice}
               onViewChange={onViewChange}
@@ -124,12 +128,13 @@ export function GridTemplate({
           <>
             <Hero
               settings={settings}
-              organizationName={organizationName}
+              organizationName={organization?.name}
               isPreview={isPreview}
               activeDevice={activeDevice}
             />
             <Categories 
               settings={settings} 
+              organization={organization}
               onCategoryClick={onCategoryClick}
               isPreview={isPreview}
               activeDevice={activeDevice}

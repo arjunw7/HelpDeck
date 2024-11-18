@@ -6,8 +6,8 @@ import { GridTemplate } from "./templates/grid";
 
 interface KnowledgeBasePreviewProps {
   settings: KnowledgeBaseSettings;
-  organizationName?: string;
-  currentView: "home" | "collection" | "article";
+  organization?: any;
+  currentView: "home" | "collection" | "article" | "changelog-list" | "changelog";
   onViewChange: (view: "home" | "collection" | "article" | "changelog-list" | "changelog") => void;
   selectedCategoryId?: string;
   selectedArticleId?: string;
@@ -22,7 +22,7 @@ interface KnowledgeBasePreviewProps {
 
 export function KnowledgeBasePreview({ 
   settings, 
-  organizationName,
+  organization,
   currentView,
   onViewChange,
   selectedCategoryId,
@@ -37,7 +37,7 @@ export function KnowledgeBasePreview({
 }: KnowledgeBasePreviewProps) {
   const commonProps = {
     settings,
-    organizationName,
+    organization,
     currentView,
     onViewChange,
     selectedCategoryId,

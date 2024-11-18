@@ -15,16 +15,8 @@ export interface Category {
   };
 }
 
-export async function getCategories() {
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("org_id")
-    .single();
-
-  if (!profile?.org_id) {
-    throw new Error("Organization not found");
-  }
-
+export async function getCategories(orgId: string) {
+  
   const { data, error } = await supabase
     .from("categories")
     .select(`
@@ -33,7 +25,7 @@ export async function getCategories() {
         full_name
       )
     `)
-    .eq("org_id", profile.org_id)
+    .eq("org_id", orgId)
     .order("created_at", { ascending: false });
 
   if (error) throw error;

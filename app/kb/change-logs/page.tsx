@@ -34,7 +34,7 @@ export default function ChangeLogsPage() {
         if (data.organizationId) {
           const { data: org } = await supabase
             .from('organizations')
-            .select('name')
+            .select('name,id,logo')
             .eq('id', data.organizationId)
             .single();
 
@@ -54,7 +54,7 @@ export default function ChangeLogsPage() {
     router.push(`/kb/change-logs/${id}`);
   };
 
-  if (!settings) {
+  if (!settings || !organization) {
     return null;
   }
 
@@ -62,10 +62,12 @@ export default function ChangeLogsPage() {
     <KnowledgeBaseLayout settings={settings}>
       <GridTemplate 
         settings={settings}
-        organizationName={organization?.name}
+        organization={organization}
         currentView="changelog-list"
         onViewChange={() => router.push('/kb')}
         handleReleaseNoteClick={handleChangeLogClick}
+        onCategoryClick={() => {}}
+        onArticleClick={() => {}}
       />
     </KnowledgeBaseLayout>
   );

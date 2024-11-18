@@ -15,6 +15,7 @@ interface ChangeLogsListProps {
   isPreview?: boolean;
   activeDevice?: string;
   onViewChange?: any,
+  organization: any,
 }
 
 export function ChangeLogsList({
@@ -23,9 +24,11 @@ export function ChangeLogsList({
   isPreview = false,
   activeDevice,
   onViewChange,
+  organization,
 }: ChangeLogsListProps) {
+  
   const [showSubscribeModal, setShowSubscribeModal] = useState(false);
-  const { releaseNotes, isLoading } = useReleaseNotes();
+  const { releaseNotes, isLoading } = useReleaseNotes(organization?.id);
 
   const getReleaseNotes = () => {
     if (isPreview) {

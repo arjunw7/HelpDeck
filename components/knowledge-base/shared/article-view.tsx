@@ -21,7 +21,6 @@ export function ArticleViewTracker({ articleId, orgId }: ArticleViewTrackerProps
     const trackPageView = async () => {
       const duration = Math.round((Date.now() - startTime) / 1000); // Convert to seconds
       try {
-        console.log('orgId', orgId)
         await fetch('/api/analytics/track', {
           method: 'POST',
           headers: {

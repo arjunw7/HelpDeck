@@ -13,6 +13,7 @@ interface CategoryViewProps {
   onViewChange: (view: "home" | "collection" | "article") => void;
   isPreview?: boolean;
   activeDevice?: string;
+  organization: any,
 }
 
 export function CategoryView({
@@ -22,9 +23,10 @@ export function CategoryView({
   onViewChange,
   isPreview = false,
   activeDevice,
+  organization,
 }: CategoryViewProps) {
-  const { categories, isLoading:categoriesLoading } = useCategories();
-  const { articles, isLoading:articlesLoading } = useArticles();
+  const { categories, isLoading:categoriesLoading } = useCategories(organization?.id);
+  const { articles, isLoading:articlesLoading } = useArticles(organization?.id);
 
   const getCategory = () => {
     if (isPreview) {

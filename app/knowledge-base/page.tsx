@@ -45,7 +45,6 @@ export default function AnalyticsPage() {
 
   useEffect(() => {
     async function fetchAnalytics() {
-      console.log('user', user, date?.from, date?.to);
       if (!user || !date?.from || !date?.to) return;
 
       try {
@@ -54,7 +53,6 @@ export default function AnalyticsPage() {
           .select("org_id, full_name")
           .eq("id", user.id)
           .single();
-          console.log('profile', profile);
         if (!profile?.org_id) return;
         setFullName(profile?.full_name);
         

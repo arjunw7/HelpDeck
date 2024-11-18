@@ -2,16 +2,15 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCategories, createCategory } from "@/lib/api/categories";
 import { toast } from "sonner";
 
-export function useCategories() {
+export function useCategories(orgId: string) {
   const queryClient = useQueryClient();
-
   const {
     data: categories = [],
     isLoading,
     error,
   } = useQuery({
     queryKey: ["categories"],
-    queryFn: getCategories,
+    queryFn: () => getCategories(orgId),
   });
 
   const createMutation = useMutation({

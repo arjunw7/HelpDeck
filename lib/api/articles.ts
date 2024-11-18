@@ -23,16 +23,7 @@ export interface Article {
   };
 }
 
-export async function getArticles() {
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("org_id")
-    .single();
-
-  if (!profile?.org_id) {
-    throw new Error("Organization not found");
-  }
-
+export async function getArticles(orgId: string) {
   const { data, error } = await supabase
     .from("articles")
     .select(`
@@ -44,7 +35,7 @@ export async function getArticles() {
         name
       )
     `)
-    .eq("org_id", profile.org_id)
+    .eq("org_id", orgId)
     .order("created_at", { ascending: false });
 
   if (error) throw error;

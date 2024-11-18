@@ -14,6 +14,7 @@ interface ChangeLogViewProps {
   onViewChange: (view: "home" | "collection" | "article" | "changelog-list" | "changelog") => void;
   isPreview?: boolean;
   activeDevice?: string;
+  organization: any,
 }
 
 export function ChangeLogView({
@@ -22,8 +23,9 @@ export function ChangeLogView({
   onViewChange,
   isPreview = false,
   activeDevice,
+  organization,
 }: ChangeLogViewProps) {
-  const { releaseNotes, isLoading } = useReleaseNotes();
+  const { releaseNotes, isLoading } = useReleaseNotes(organization?.id);
 
   const getChangeLog = () => {
     if (isPreview) {

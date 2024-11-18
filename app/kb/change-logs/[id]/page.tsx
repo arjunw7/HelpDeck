@@ -36,7 +36,7 @@ export default function ChangeLogPage({ params }: { params: { id: string } }) {
         if (data.organizationId) {
           const { data: org } = await supabase
             .from('organizations')
-            .select('name')
+            .select('name, id, logo')
             .eq('id', data.organizationId)
             .single();
 
@@ -68,7 +68,7 @@ export default function ChangeLogPage({ params }: { params: { id: string } }) {
     <KnowledgeBaseLayout settings={settings}>
       <GridTemplate 
         settings={settings}
-        organizationName={organization?.name}
+        organization={organization}
         currentView="changelog"
         selectedRelaseNoteId={releaseNoteId}
         onViewChange={() => router.push('/kb/change-logs')}

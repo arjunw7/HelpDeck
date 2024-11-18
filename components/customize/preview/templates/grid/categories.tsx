@@ -6,15 +6,15 @@ import { PREVIEW_DATA } from "@/lib/preview-data";
 
 interface CategoriesProps {
   settings: KnowledgeBaseSettings;
+  organization: any,
   onCategoryClick: (categoryId: string) => void;
   isPreview?: boolean;
   activeDevice?: string,
 }
 
-export function Categories({ settings, onCategoryClick, isPreview = false, activeDevice }: CategoriesProps) {
-  const { categories } = useCategories();
-  const { articles } = useArticles();
-
+export function Categories({ settings, organization, onCategoryClick, isPreview = false, activeDevice }: CategoriesProps) {
+  const { categories } = useCategories(organization?.id);
+  const { articles } = useArticles(organization?.id);
   const getCategories = () => {
     if (isPreview) {
       return PREVIEW_DATA.categories.filter(cat => !cat.parent_id);

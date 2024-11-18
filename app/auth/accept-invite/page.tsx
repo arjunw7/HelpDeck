@@ -16,6 +16,7 @@ export default function AcceptInvitePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [invitation, setInvitation] = useState<any>(null);
   const [formData, setFormData] = useState({
+    fullName: "",
     password: "",
     confirmPassword: "",
   });
@@ -64,6 +65,11 @@ export default function AcceptInvitePage() {
     e.preventDefault();
     if (!invitation) return;
 
+    if (!formData.fullName.trim()) {
+      toast.error("Please enter your name");
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       toast.error("Passwords do not match");
       return;
@@ -71,15 +77,12 @@ export default function AcceptInvitePage() {
 
     setIsSubmitting(true);
     try {
-      // Create user account with email confirmation bypassed
+      // Create user account
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: invitation.email,
         password: formData.password,
         options: {
-          data: {
-            email_confirmed_at: new Date().toISOString(), // This bypasses email verification
-            email_verified: true,
-          },
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       });
 
@@ -93,6 +96,7 @@ export default function AcceptInvitePage() {
           {
             id: authData.user.id,
             email: invitation.email,
+            full_name: formData.fullName,
             org_id: invitation.org_id,
             role: invitation.role,
           },
@@ -111,16 +115,9 @@ export default function AcceptInvitePage() {
 
       if (inviteError) throw inviteError;
 
-      // Sign in the user immediately
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email: invitation.email,
-        password: formData.password,
-      });
-
-      if (signInError) throw signInError;
-
-      toast.success("Account created successfully!");
-      router.push("/knowledge-base");
+      // Show success message and redirect
+      toast.success("Account created! Please check your email to verify your account.");
+      router.push("/auth/verify-email");
     } catch (error) {
       console.error("Error accepting invitation:", error);
       toast.error("Failed to create account");
@@ -155,6 +152,19 @@ export default function AcceptInvitePage() {
               type="email"
               value={invitation?.email}
               disabled
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="fullName">Full Name</Label>
+            <Input
+              id="fullName"
+              value={formData.fullName}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, fullName: e.target.value }))
+              }
+              placeholder="Enter your full name"
+              required
             />
           </div>
 
