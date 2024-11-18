@@ -16,9 +16,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useAuth } from "@/providers/auth-provider";
 
 export default function ReleaseNotesPage() {
-  const { releaseNotes, isLoading } = useReleaseNotes();
+  const { organization } = useAuth()
+  const { releaseNotes, isLoading } = useReleaseNotes(organization?.id);
   const {
     searchQuery,
     setSearchQuery,

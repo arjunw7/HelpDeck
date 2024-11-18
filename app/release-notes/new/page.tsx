@@ -25,6 +25,7 @@ import { Editor } from "@/components/articles/editor";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { useAuth } from "@/providers/auth-provider";
 
 const typeOptions = [
   { value: "major", label: "Major" },
@@ -34,7 +35,8 @@ const typeOptions = [
 
 export default function NewReleaseNotePage() {
   const router = useRouter();
-  const { createReleaseNote, isCreating } = useReleaseNotes();
+  const { organization } = useAuth();
+  const { createReleaseNote, isCreating } = useReleaseNotes(organization?.id);
   const [formData, setFormData] = useState({
     title: "",
     version: "",

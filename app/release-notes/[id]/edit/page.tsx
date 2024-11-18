@@ -42,6 +42,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { ReleaseNoteEditSkeleton } from "@/components/skeletons/release-note-edit-skeleton";
+import { useAuth } from "@/providers/auth-provider";
 
 const typeOptions = [
   { value: "major", label: "Major" },
@@ -57,7 +58,8 @@ const statusOptions = [
 
 export default function EditReleaseNotePage({ params }: { params: { id: string } }) {
   const router = useRouter();
-  const { getReleaseNote, updateReleaseNote, deleteReleaseNote, isUpdating } = useReleaseNotes();
+  const { organization } = useAuth();
+  const { getReleaseNote, updateReleaseNote, deleteReleaseNote, isUpdating } = useReleaseNotes(organization?.id);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [open, setOpen] = useState(false);

@@ -18,9 +18,10 @@ import { toast } from "sonner";
 interface SubscribeModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  organization?: any,
 }
 
-export function SubscribeModal({ open, onOpenChange }: SubscribeModalProps) {
+export function SubscribeModal({ open, onOpenChange, organization }: SubscribeModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -49,7 +50,7 @@ export function SubscribeModal({ open, onOpenChange }: SubscribeModalProps) {
       const { data: existingSubscriber, error: checkError } = await supabase
         .from("subscribers")
         .select("id")
-        .eq("org_id", data.organizationId)
+        .eq("org_id", organization?.id || data.organizationId)
         .eq("email", formData.email)
         .single();
 
@@ -67,8 +68,6 @@ export function SubscribeModal({ open, onOpenChange }: SubscribeModalProps) {
             last_name: formData.lastName,
             email: formData.email,
             org_id: data.organizationId,
-            created_by: "system",
-            updated_by: "system",
           },
         ]);
 

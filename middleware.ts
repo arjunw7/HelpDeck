@@ -12,15 +12,15 @@ export async function middleware(req: NextRequest) {
   const isPublicDomain = hostname.endsWith('.helpdeck.app') && hostname !== 'helpdeck.app';
 
   // Special case for localhost or development
-  // if (!isProd && req.headers.get('x-public-preview') === 'true') {
-  //   // Allow preview in development
-  //   return await handlePublicKnowledgeBase(req, res, supabase);
-  // }
+  if (!isProd && req.headers.get('x-public-preview') === 'true') {
+    // Allow preview in development
+    return await handlePublicKnowledgeBase(req, res, supabase);
+  }
 
-  // // Handle public knowledge base domains
-  // if (isPublicDomain) {
-  //   return await handlePublicKnowledgeBase(req, res, supabase);
-  // }
+  // Handle public knowledge base domains
+  if (isPublicDomain) {
+    return await handlePublicKnowledgeBase(req, res, supabase);
+  }
 
   // Refresh session if it exists
   const { data: { session } } = await supabase.auth.getSession();

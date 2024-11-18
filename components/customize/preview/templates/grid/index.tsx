@@ -48,9 +48,9 @@ export function GridTemplate({
           <>
             <Hero
               settings={settings}
-              organizationName={organization?.name}
               isPreview={isPreview}
               activeDevice={activeDevice}
+              organization={organization}
             />
             <CategoryView
               settings={settings}
@@ -68,7 +68,7 @@ export function GridTemplate({
           <>
             <Hero
               settings={settings}
-              organizationName={organization?.name}
+              organization={organization}
               isPreview={isPreview}
               activeDevice={activeDevice}
             />
@@ -88,7 +88,7 @@ export function GridTemplate({
           <>
             <Hero
               settings={settings}
-              organizationName={organization?.name}
+              organization={organization}
               isChangeLog
               isPreview={isPreview}
               activeDevice={activeDevice}
@@ -108,7 +108,7 @@ export function GridTemplate({
           <>
             <Hero
               settings={settings}
-              organizationName={organization?.name}
+              organization={organization}
               isChangeLog
               isPreview={isPreview}
               activeDevice={activeDevice}
@@ -128,7 +128,7 @@ export function GridTemplate({
           <>
             <Hero
               settings={settings}
-              organizationName={organization?.name}
+              organization={organization}
               isPreview={isPreview}
               activeDevice={activeDevice}
             />
