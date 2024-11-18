@@ -45,7 +45,7 @@ interface Invitation {
 }
 
 export function UserManagement() {
-  const { user } = useAuth();
+  const { user, organization } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -165,8 +165,8 @@ export function UserManagement() {
         body: JSON.stringify({
           email: invitation.email,
           role: invitation.role,
-          orgId: user?.organization?.id,
-          orgName: user?.organization?.name,
+          orgId: organization?.id,
+          orgName: organization?.name,
           userId: user?.id,
           expiryDate: newExpiryDate.toISOString(),
         }),

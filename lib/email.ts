@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
 
 export async function sendInvitationEmail(email: string, inviteUrl: string, organizationName: string) {
   const mailOptions = {
-    from: `"${organizationName}" <${process.env.SMTP_FROM}>`,
+    from: `"${organizationName}" <noreply@helpdeck.app>`,
     to: email,
     subject: `You've been invited to join ${organizationName} on HelpDeck`,
     html: `

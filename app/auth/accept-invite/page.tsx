@@ -78,6 +78,7 @@ export default function AcceptInvitePage() {
         options: {
           data: {
             email_confirmed_at: new Date().toISOString(), // This bypasses email verification
+            email_verified: true,
           },
         },
       });
@@ -94,7 +95,6 @@ export default function AcceptInvitePage() {
             email: invitation.email,
             org_id: invitation.org_id,
             role: invitation.role,
-            email_verified: true, // Mark email as verified
           },
         ]);
 

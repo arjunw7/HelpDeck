@@ -43,6 +43,7 @@ export function InviteUserDialog({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('user, organization', user, organization)
     if (!organization || !user) {
       toast.error("Organization or user not found");
       return;
