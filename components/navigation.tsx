@@ -18,6 +18,7 @@ import { UserNav } from "./user-nav";
 import { useAuth } from "@/hooks/use-auth";
 import { LucideIcon } from "lucide-react";
 import { TrialStatus } from "./trial-status";
+import Image from "next/image";
 
 interface PublicRoute {
   href: string;
@@ -35,7 +36,7 @@ type Route = PublicRoute | AuthenticatedRoute;
 
 export function Navigation() {
   const pathname = usePathname();
-  const { setTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
   const { user } = useAuth();
 
   // Don't show navigation on knowledge base routes
@@ -75,15 +76,20 @@ export function Navigation() {
   const otherPrivateRoutes = ['/settings', '/customize'];
   const isAuthenticatedRoute = authenticatedRoutes.some(route => pathname.includes(route.root) || otherPrivateRoutes.includes(pathname));
   const routes = isAuthenticatedRoute ? authenticatedRoutes : publicRoutes;
-
+  const logoSrc = theme === 'light' ? '/logo-dark.png' : '/logo-dark.png';
   return (
     <header className="sticky top-0 z-50 w-full px-[5%] border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-14 items-center">
         <div className="mr-4 hidden md:flex">
           <Link href={"/"} className="mr-6 flex items-center space-x-2">
-            <span className="hidden font-bold sm:inline-block">
-              HelpDeck
-            </span>
+          <Image
+            src={logoSrc}
+            alt="HelpDeck"
+            width={120}
+            height={30}
+            className="h-8 w-auto"
+            priority
+          />
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
             {routes.map((route) => {

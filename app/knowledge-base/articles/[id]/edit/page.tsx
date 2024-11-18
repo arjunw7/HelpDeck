@@ -69,7 +69,7 @@ export default function EditArticlePage({ params }: { params: { id: string } }) 
   const router = useRouter();
   const { user, organization } = useAuth();
   const { categories } = useCategories(organization?.id);
-  const { articles, updateArticle, deleteArticle, isUpdating } = useArticles();
+  const { articles, updateArticle, deleteArticle, isUpdating } = useArticles(organization?.id);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [formData, setFormData] = useState({

@@ -16,12 +16,14 @@ import { useArticles } from "@/hooks/use-articles";
 import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "../auth-provider";
 
 const MAX_FEATURED_ARTICLES = 6;
 
 export function FeaturedContent() {
   const { settings, updateContentSettings } = useCustomizeStore();
-  const { articles } = useArticles();
+  const { user, organization } = useAuth();
+  const { articles } = useArticles(organization?.id);
 
   const handlePinnedArticleSelect = (articleId: string) => {
     if (settings.content.pinnedArticles.length >= MAX_FEATURED_ARTICLES && 

@@ -122,7 +122,7 @@ export default function CustomizePreview({
           <div className="rounded-lg border bg-background overflow-hidden">
             <KnowledgeBasePreview
               settings={settings}
-              organizationName={organization?.name}
+              organization={organization}
               currentView={activeScreen}
               onViewChange={onScreenChange}
               selectedCategoryId={selectedCategoryId}

@@ -10,10 +10,12 @@ import { Article } from "@/lib/api/articles";
 import { useArticles } from "@/hooks/use-articles";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/providers/auth-provider";
 
 export default function ArticlePage({ params }: { params: { id: string } }) {
   const router = useRouter();
-  const { getArticle } = useArticles();
+  const { user, organization } = useAuth();
+  const { getArticle } = useArticles(organization?.id);
   const [article, setArticle] = useState<Article | null>(null);
 
   useEffect(() => {
