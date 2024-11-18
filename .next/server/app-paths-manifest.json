@@ -1,8 +1,0 @@
-{
-  "/page": "app/page.js",
-  "/auth/page": "app/auth/page.js",
-  "/settings/page": "app/settings/page.js",
-  "/knowledge-base/page": "app/knowledge-base/page.js",
-  "/auth/accept-invite/page": "app/auth/accept-invite/page.js",
-  "/kb/page": "app/kb/page.js"
-}
