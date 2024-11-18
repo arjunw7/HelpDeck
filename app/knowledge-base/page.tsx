@@ -33,8 +33,8 @@ interface TopArticle {
 }
 
 export default function AnalyticsPage() {
-  const { articles } = useArticles();
-  const { user } = useAuth();
+  const { user, organization } = useAuth();
+  const { articles } = useArticles(organization?.id);
   const [pageViews, setPageViews] = useState<PageView[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [fullName, setFullName] = useState('');

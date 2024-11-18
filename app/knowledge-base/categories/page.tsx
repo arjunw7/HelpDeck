@@ -10,9 +10,11 @@ import { CategoriesTable } from "@/components/categories/categories-table";
 import { useCategories } from "@/hooks/use-categories";
 import { useCategoriesStore } from "@/stores/categories";
 import { CategoryListSkeleton } from "@/components/skeletons/category-list-skeleton";
+import { useAuth } from "@/providers/auth-provider";
 
 export default function CategoriesPage() {
-  const { categories, isLoading } = useCategories();
+  const { user, organization } = useAuth();
+  const { categories, isLoading } = useCategories(organization?.id);
   const {
     searchQuery,
     setSearchQuery,

@@ -32,6 +32,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useAuth } from "@/providers/auth-provider";
 
 const visibilityOptions = [
   { value: "public", label: "Public", icon: Globe },
@@ -40,8 +41,9 @@ const visibilityOptions = [
 
 export default function NewArticlePage() {
   const router = useRouter();
-  const { categories } = useCategories();
-  const { articles, createArticle, isCreating } = useArticles();
+  const { user, organization } = useAuth();
+  const { categories } = useCategories(organization?.id);
+  const { articles, createArticle, isCreating } = useArticles(organization?.id);
   const [formData, setFormData] = useState({
     title: "",
     subtitle: "",

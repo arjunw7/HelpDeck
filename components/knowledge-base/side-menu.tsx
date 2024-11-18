@@ -16,6 +16,7 @@ import { usePathname } from "next/navigation";
 import { CategoryModal } from "@/components/categories/category-modal";
 import { useCategories } from "@/hooks/use-categories";
 import { useState } from "react";
+import { useAuth } from "../auth-provider";
 
 const menuItems = [
   {
@@ -48,7 +49,8 @@ const menuItems = [
 
 export function SideMenu() {
   const pathname = usePathname();
-  const { categories } = useCategories();
+  const { user, organization } = useAuth();
+  const { categories } = useCategories(organization?.id);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
 
   const isActiveRoute = (item: typeof menuItems[0]) => {

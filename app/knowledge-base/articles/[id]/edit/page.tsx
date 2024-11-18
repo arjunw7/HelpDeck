@@ -50,6 +50,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/providers/auth-provider";
 
 const statusOptions = [
   { value: "published", label: "Published", color: "text-green-500" },
@@ -66,7 +67,8 @@ type ArticleStatus = "published" | "draft" | "archived";
 
 export default function EditArticlePage({ params }: { params: { id: string } }) {
   const router = useRouter();
-  const { categories } = useCategories();
+  const { user, organization } = useAuth();
+  const { categories } = useCategories(organization?.id);
   const { articles, updateArticle, deleteArticle, isUpdating } = useArticles();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(true);

@@ -30,6 +30,7 @@ import { useState, useCallback } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { useCategories } from "@/hooks/use-categories";
+import { useAuth } from "../auth-provider";
 
 interface ArticlesListProps {
   articles: Article[];
@@ -47,7 +48,8 @@ const visibilityOptions = [
 
 export function ArticlesList({ articles }: ArticlesListProps) {
   const router = useRouter();
-  const { categories } = useCategories();
+  const { user, organization } = useAuth();
+  const { categories } = useCategories(organization?.id);
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState({

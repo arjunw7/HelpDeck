@@ -30,6 +30,7 @@ import { useCategories } from "@/hooks/use-categories";
 import { Category } from "@/lib/api/categories";
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
+import { useAuth } from "../auth-provider";
 
 interface CategoryModalProps {
   open: boolean;
@@ -43,7 +44,8 @@ const visibilityOptions = [
 ] as const;
 
 export function CategoryModal({ open, onOpenChange, categories }: CategoryModalProps) {
-  const { createCategory, isCreating } = useCategories();
+  const { user, organization } = useAuth();
+  const { createCategory, isCreating } = useCategories(organization?.id);
   const [formData, setFormData] = useState({
     name: "",
     slug: "",

@@ -9,10 +9,12 @@ import { ArticlesList } from "@/components/articles/articles-list";
 import { ArticleListSkeleton } from "@/components/skeletons/article-list-skeleton";
 import { EmptyState } from "@/components/articles/empty-state";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/providers/auth-provider";
 
 export default function ArticlesPage() {
   const router = useRouter();
-  const { articles, isLoading } = useArticles();
+  const { user, organization } = useAuth();
+  const { articles, isLoading } = useArticles(organization?.id);
   
   // Filter out deleted articles
   const activeArticles = articles.filter(article => article.status !== "archived");
