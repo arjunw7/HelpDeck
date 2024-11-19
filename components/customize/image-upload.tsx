@@ -12,6 +12,7 @@ interface ImageUploadProps {
   onChange: (url: string) => void;
   accept?: string;
   maxSize?: number;
+  disabled?: boolean;
 }
 
 export function ImageUpload({
@@ -19,6 +20,7 @@ export function ImageUpload({
   onChange,
   accept = "image/*",
   maxSize = 2,
+  disabled = false,
 }: ImageUploadProps) {
   const [isUploading, setIsUploading] = useState(false);
 
@@ -68,13 +70,13 @@ export function ImageUpload({
           type="file"
           accept={accept}
           onChange={handleUpload}
-          disabled={isUploading}
+          disabled={isUploading || disabled}
         />
         {value && (
           <Button
             variant="outline"
             onClick={() => onChange("")}
-            disabled={isUploading}
+            disabled={isUploading || disabled}
           >
             Remove
           </Button>

@@ -14,6 +14,7 @@ import {
 import { useSubscribers } from "@/hooks/use-subscribers";
 import { toast } from "sonner";
 import { Download } from "lucide-react";
+import { useAuth } from "../auth-provider";
 
 interface ImportSubscribersModalProps {
   open: boolean;
@@ -21,7 +22,8 @@ interface ImportSubscribersModalProps {
 }
 
 export function ImportSubscribersModal({ open, onOpenChange }: ImportSubscribersModalProps) {
-  const { importSubscribers, isImporting } = useSubscribers();
+  const { user, organization } = useAuth();
+  const { importSubscribers, isImporting } = useSubscribers(organization?.id);
   const [file, setFile] = useState<File | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

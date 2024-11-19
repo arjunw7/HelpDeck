@@ -1,3 +1,4 @@
+import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Edit3, Search, Palette, BarChart2, Shield, Puzzle, Sparkles, FileText } from "lucide-react";
@@ -48,36 +49,39 @@ const features = [
 
 export default function FeaturesPage() {
   return (
-    <div className="container py-24">
-      <div className="mx-auto max-w-3xl text-center">
-        <h1 className="mb-4 text-4xl font-bold">Powerful Features for Modern Documentation</h1>
-        <p className="mb-16 text-lg text-muted-foreground">
-          Everything you need to create, manage, and scale your knowledge base
-        </p>
-      </div>
+    <div>
+      <div className="px-[5%] py-24">
+        <div className="mx-auto max-w-3xl text-center">
+          <h1 className="mb-4 text-4xl font-bold">Powerful Features for Modern Documentation</h1>
+          <p className="mb-16 text-lg text-muted-foreground">
+            Everything you need to create, manage, and scale your knowledge base
+          </p>
+        </div>
 
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {features.map((feature) => {
-          const Icon = feature.icon;
-          return (
-            <Card key={feature.title} className="relative overflow-hidden">
-              <CardHeader>
-                <Icon className="h-8 w-8 text-primary" />
-                <CardTitle className="text-xl">{feature.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">{feature.description}</p>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {features.map((feature) => {
+            const Icon = feature.icon;
+            return (
+              <Card key={feature.title} className="relative overflow-hidden">
+                <CardHeader>
+                  <Icon className="h-8 w-8 text-primary" />
+                  <CardTitle className="text-xl">{feature.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">{feature.description}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
 
-      <div className="mt-16 text-center">
-        <Link href="/auth">
-          <Button size="lg">Get Started Free</Button>
-        </Link>
+        <div className="mt-16 text-center">
+          <Link href="/auth">
+            <Button size="lg">Get Started Free</Button>
+          </Link>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }

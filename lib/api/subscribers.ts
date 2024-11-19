@@ -11,20 +11,12 @@ export interface Subscriber {
   updated_at: string;
 }
 
-export async function getSubscribers() {
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("org_id")
-    .single();
-
-  if (!profile?.org_id) {
-    throw new Error("Organization not found");
-  }
+export async function getSubscribers(orgId: string) {
 
   const { data, error } = await supabase
     .from("subscribers")
     .select("*")
-    .eq("org_id", profile.org_id)
+    .eq("org_id", orgId)
     .order("created_at", { ascending: false });
 
   if (error) throw error;

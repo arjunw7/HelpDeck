@@ -22,6 +22,8 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/lib/supabase";
+import { usePlanLimits } from "@/hooks/use-plan.limits";
+import { useUsers } from "@/hooks/use-users";
 
 interface InviteUserDialogProps {
   open: boolean;
@@ -40,11 +42,17 @@ export function InviteUserDialog({
     email: "",
     role: "member",
   });
+  const { userLimit, isWithinUserLimit } = usePlanLimits();
+  const { users } = useUsers();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!organization || !user) {
       toast.error("Organization or user not found");
+      return;
+    }
+    if (!isWithinUserLimit(users.length + 1)) {
+      toast.error(`You've reached the maximum user limit (${userLimit}) for your plan`);
       return;
     }
 

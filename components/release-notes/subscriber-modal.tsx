@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { useSubscribers } from "@/hooks/use-subscribers";
 import { Subscriber } from "@/lib/api/subscribers";
+import { useAuth } from "../auth-provider";
 
 interface SubscriberModalProps {
   open: boolean;
@@ -22,7 +23,8 @@ interface SubscriberModalProps {
 }
 
 export function SubscriberModal({ open, onOpenChange, subscriber }: SubscriberModalProps) {
-  const { createSubscriber, updateSubscriber, isCreating, isUpdating } = useSubscribers();
+  const { user, organization } = useAuth();
+  const { createSubscriber, updateSubscriber, isCreating, isUpdating } = useSubscribers(organization?.id);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",

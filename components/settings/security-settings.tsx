@@ -21,10 +21,13 @@ import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { SettingsSecuritySkeleton } from "@/components/skeletons/settings-security-skeleton";
+import { useUserPermissions } from "@/hooks/use-user-permissions";
 
 export function SecuritySettings() {
   const router = useRouter();
   const { user, signOut } = useAuth();
+  const { canManageOrganization } = useUserPermissions();
+
   const [isLoading, setIsLoading] = useState(true);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [currentUserRole, setCurrentUserRole] = useState<string | null>(null);
@@ -226,7 +229,7 @@ export function SecuritySettings() {
         </div>
       </Card>
 
-      {currentUserRole === "owner" && (
+      {canManageOrganization && (
         <Card className="border-destructive p-6">
           <div className="space-y-6">
             <div>

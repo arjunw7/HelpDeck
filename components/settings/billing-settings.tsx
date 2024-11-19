@@ -10,9 +10,12 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { SettingsBillingSkeleton } from "@/components/skeletons/settings-billing-skeleton";
 import { PricingModal } from "@/components/pricing-modal";
 import { Badge } from "@/components/ui/badge";
+import { useUserPermissions } from "@/hooks/use-user-permissions";
 
 export function BillingSettings() {
   const { subscription, isLoading: isLoadingSubscription } = useSubscription();
+  const { canManageSubscription } = useUserPermissions();
+
   const { organization } = useAuth();
   const [showPricingModal, setShowPricingModal] = useState(false);
 
@@ -48,9 +51,9 @@ export function BillingSettings() {
               Manage your subscription and billing information
             </p>
           </div>
-          <Button onClick={() => setShowPricingModal(true)}>
+          {canManageSubscription && <Button onClick={() => setShowPricingModal(true)}>
             {subscription?.status === "trialing" ? "Upgrade Plan" : "Change Plan"}
-          </Button>
+          </Button>}
         </div>
 
         {subscription?.status === "trialing" && subscription.trial_end && (

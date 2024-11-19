@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getSubscribers, createSubscriber, updateSubscriber, importSubscribers } from "@/lib/api/subscribers";
 import { toast } from "sonner";
 
-export function useSubscribers() {
+export function useSubscribers(orgId: string) {
   const queryClient = useQueryClient();
 
   const {
@@ -13,7 +13,7 @@ export function useSubscribers() {
     error,
   } = useQuery({
     queryKey: ["subscribers"],
-    queryFn: getSubscribers,
+    queryFn: () => getSubscribers(orgId),
   });
 
   const createMutation = useMutation({

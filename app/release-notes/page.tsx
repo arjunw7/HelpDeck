@@ -17,10 +17,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useAuth } from "@/providers/auth-provider";
+import { usePlanLimits } from "@/hooks/use-plan.limits";
+import { UpgradePlanOverlay } from "@/components/upgrade-plan-overlay";
 
 export default function ReleaseNotesPage() {
   const { organization } = useAuth()
   const { releaseNotes, isLoading } = useReleaseNotes(organization?.id);
+  // In your change log page component
+  const { hasChangeLogAccess } = usePlanLimits();
+
   const {
     searchQuery,
     setSearchQuery,
@@ -37,6 +42,11 @@ export default function ReleaseNotesPage() {
 
   return (
     <div className="px-[20px] space-y-8">
+      { !hasChangeLogAccess &&
+          <UpgradePlanOverlay
+            message="Upgrade to Pro or Enterprise plan to access change logs and keep your users informed about updates."
+          />
+      }
       <div className="flex gap-4">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />

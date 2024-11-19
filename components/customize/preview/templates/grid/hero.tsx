@@ -11,14 +11,14 @@ import { useRouter } from "next/navigation";
 
 interface HeroProps {
   settings: KnowledgeBaseSettings;
-  organizationName?: string;
+  organization?: any;
   onSearch?: (query: string) => void;
   isChangeLog?: boolean;
   isPreview?: boolean;
   activeDevice?: string;
 }
 
-export function Hero({ settings, onSearch, organizationName, isChangeLog, isPreview, activeDevice }: HeroProps) {
+export function Hero({ settings, onSearch, organization, isChangeLog, isPreview, activeDevice }: HeroProps) {
   const router = useRouter();
   const [showSubscribeModal, setShowSubscribeModal] = useState(false);
   const getTextColor = (bgColor: string) => {
@@ -103,7 +103,7 @@ export function Hero({ settings, onSearch, organizationName, isChangeLog, isPrev
                   fontFamily: settings.theme.primaryFont || undefined,
                   color: settings?.theme?.headerLink || getTextColor(settings?.theme?.headerBackground),
                 }}>
-                  {organizationName || settings.general.title}
+                  {organization?.name || settings.general.title}
                 </span>
               )}
             </div>
@@ -263,6 +263,7 @@ export function Hero({ settings, onSearch, organizationName, isChangeLog, isPrev
       <SubscribeModal
         open={showSubscribeModal}
         onOpenChange={setShowSubscribeModal}
+        organization={organization}
       />
     </div>
   );

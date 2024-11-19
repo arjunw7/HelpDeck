@@ -26,6 +26,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { InviteUserDialog } from "./invite-user-dialog";
 import { SettingsUsersSkeleton } from "@/components/skeletons/settings-users-skeleton";
 import { formatDistanceToNow } from "date-fns";
+import { useUserPermissions } from "@/hooks/use-user-permissions";
 
 interface User {
   id: string;
@@ -46,6 +47,8 @@ interface Invitation {
 
 export function UserManagement() {
   const { user, organization } = useAuth();
+  const { canManageUsers } = useUserPermissions();
+
   const [users, setUsers] = useState<User[]>([]);
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -206,7 +209,6 @@ export function UserManagement() {
     }
   };
 
-  const canManageUsers = currentUserRole === "owner" || currentUserRole === "admin";
   const isOwner = currentUserRole === "owner";
 
   if (isLoading) {

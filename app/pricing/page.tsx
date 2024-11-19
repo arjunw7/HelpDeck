@@ -12,6 +12,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
 import { initializePaddle } from '@paddle/paddle-js';
 import { Skeleton } from "@/components/ui/skeleton";
+import { Footer } from "@/components/footer";
 
 export default function PricingPage() {
   const router = useRouter();
@@ -124,81 +125,83 @@ export default function PricingPage() {
   }
 
   return (
-    <div className="container py-24">
-      <div className="mx-auto max-w-3xl text-center">
-        <h1 className="mb-4 text-4xl font-bold">Simple, Transparent Pricing</h1>
-        <p className="mb-8 text-lg text-muted-foreground">
-          Choose the perfect plan for your team
-        </p>
+    <div>
+      <div className="px-[5%] py-24">
+        <div className="mx-auto max-w-3xl text-center">
+          <h1 className="mb-4 text-4xl font-bold">Simple, Transparent Pricing</h1>
+          <p className="mb-8 text-lg text-muted-foreground">
+            Choose the perfect plan for your team
+          </p>
 
-        <div className="flex justify-center mb-8">
-          <ToggleGroup
-            type="single"
-            value={billingInterval}
-            onValueChange={(value) => value && setBillingInterval(value as "monthly" | "yearly")}
-            className="inline-flex items-center bg-muted p-1 rounded-lg"
-          >
-            <ToggleGroupItem
-              value="monthly"
-              className="px-6 py-2 rounded-md data-[state=on]:bg-background data-[state=on]:text-foreground"
+          <div className="flex justify-center mb-8">
+            <ToggleGroup
+              type="single"
+              value={billingInterval}
+              onValueChange={(value) => value && setBillingInterval(value as "monthly" | "yearly")}
+              className="inline-flex items-center bg-muted p-1 rounded-lg"
             >
-              Monthly
-            </ToggleGroupItem>
-            <ToggleGroupItem
-              value="yearly"
-              className="px-6 py-2 rounded-md data-[state=on]:bg-background data-[state=on]:text-foreground"
-            >
-              Yearly
-              <span className="ml-2 text-xs text-emerald-600 font-medium">Save up to 35%</span>
-            </ToggleGroupItem>
-          </ToggleGroup>
+              <ToggleGroupItem
+                value="monthly"
+                className="px-6 py-2 rounded-md data-[state=on]:bg-background data-[state=on]:text-foreground"
+              >
+                Monthly
+              </ToggleGroupItem>
+              <ToggleGroupItem
+                value="yearly"
+                className="px-6 py-2 rounded-md data-[state=on]:bg-background data-[state=on]:text-foreground"
+              >
+                Yearly
+                <span className="ml-2 text-xs text-emerald-600 font-medium">Save up to 35%</span>
+              </ToggleGroupItem>
+            </ToggleGroup>
+          </div>
+        </div>
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {availablePlans.map((plan) => {
+            const price = getPriceForPlan(plan);
+
+            return (
+              <Card key={plan.id} className="flex flex-col">
+                <CardHeader>
+                  <CardTitle className="text-2xl">{plan.name}</CardTitle>
+                  <p className="text-sm text-muted-foreground">{plan.description}</p>
+                </CardHeader>
+                <CardContent className="flex-1">
+                  <div className="mb-8">
+                    <div className="flex items-baseline">
+                      <span className="text-4xl font-bold">${Number(price)?.toFixed(2)}</span>
+                      <span className="text-muted-foreground">/{billingInterval}</span>
+                    </div>
+                    {billingInterval === "yearly" && (
+                      <p className="mt-1 text-sm text-green-500">
+                        Save {Math.round(((plan.monthlyPrice * 12 - plan.yearlyPrice) / (plan.monthlyPrice * 12)) * 100)}% with yearly billing
+                      </p>
+                    )}
+                  </div>
+                  <ul className="space-y-3 text-sm">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="flex items-center">
+                        <Check className="mr-2 h-4 w-4 text-primary" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+                <CardFooter>
+                  <Button 
+                    className="w-full" 
+                    onClick={() => handlePlanSelect(plan)}
+                    disabled={isCheckoutLoading}
+                  >
+                    {isCheckoutLoading ? "Processing..." : "Get Started"}
+                  </Button>
+                </CardFooter>
+              </Card>
+            );
+          })}
         </div>
       </div>
-
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {availablePlans.map((plan) => {
-          const price = getPriceForPlan(plan);
-
-          return (
-            <Card key={plan.id} className="flex flex-col">
-              <CardHeader>
-                <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                <p className="text-sm text-muted-foreground">{plan.description}</p>
-              </CardHeader>
-              <CardContent className="flex-1">
-                <div className="mb-8">
-                  <div className="flex items-baseline">
-                    <span className="text-4xl font-bold">${Number(price)?.toFixed(2)}</span>
-                    <span className="text-muted-foreground">/{billingInterval}</span>
-                  </div>
-                  {billingInterval === "yearly" && (
-                    <p className="mt-1 text-sm text-green-500">
-                      Save {Math.round(((plan.monthlyPrice * 12 - plan.yearlyPrice) / (plan.monthlyPrice * 12)) * 100)}% with yearly billing
-                    </p>
-                  )}
-                </div>
-                <ul className="space-y-3 text-sm">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-center">
-                      <Check className="mr-2 h-4 w-4 text-primary" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-              <CardFooter>
-                <Button 
-                  className="w-full" 
-                  onClick={() => handlePlanSelect(plan)}
-                  disabled={isCheckoutLoading}
-                >
-                  {isCheckoutLoading ? "Processing..." : "Get Started"}
-                </Button>
-              </CardFooter>
-            </Card>
-          );
-        })}
-      </div>
+      <Footer />
     </div>
   );
 }

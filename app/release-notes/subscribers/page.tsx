@@ -10,9 +10,11 @@ import { SubscribersList } from "@/components/release-notes/subscribers-list";
 import { SubscriberModal } from "@/components/release-notes/subscriber-modal";
 import { ImportSubscribersModal } from "@/components/release-notes/import-subscribers-modal";
 import { SubscribersListSkeleton } from "@/components/skeletons/subscribers-list-skeleton";
+import { useAuth } from "@/providers/auth-provider";
 
 export default function SubscribersPage() {
-  const { subscribers, isLoading } = useSubscribers();
+  const { user, organization } = useAuth();
+  const { subscribers, isLoading } = useSubscribers(organization?.id);
   const [searchQuery, setSearchQuery] = useState("");
   const [showSubscriberModal, setShowSubscriberModal] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);

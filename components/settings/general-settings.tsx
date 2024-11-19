@@ -10,9 +10,12 @@ import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
 import { SettingsGeneralSkeleton } from "@/components/skeletons/settings-general-skeleton";
+import { useUserPermissions } from "@/hooks/use-user-permissions";
 
 export function GeneralSettings() {
   const { user, organization: initialOrg } = useAuth();
+  const { canManageOrganization } = useUserPermissions();
+
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [organization, setOrganization] = useState({
@@ -27,6 +30,7 @@ export function GeneralSettings() {
 
   useEffect(() => {
     async function loadSettings() {
+      console.log('user', user, initialOrg);
       if (!user) return;
 
       try {
@@ -35,9 +39,8 @@ export function GeneralSettings() {
           .select("full_name, avatar_url, role")
           .eq("id", user.id)
           .single();
-
         if (profileError) throw profileError;
-
+        console.log('user', profileData, profileError);
         if (profileData) {
           setProfile({
             full_name: profileData.full_name || "",
@@ -53,7 +56,7 @@ export function GeneralSettings() {
           });
         }
       } catch (error) {
-        console.error("Error loading settings:", error);
+        console.log("Error loading settings:", error);
         toast.error("Failed to load settings");
       } finally {
         setIsLoading(false);
@@ -129,7 +132,7 @@ export function GeneralSettings() {
   return (
     <div className="grid gap-6">
       {/* Organization Settings */}
-      {(profile?.role === "owner" || profile?.role === "admin") && (
+      {(canManageOrganization) && (
         <Card className="p-6">
           <form onSubmit={handleOrganizationUpdate}>
             <div className="space-y-4">
@@ -176,7 +179,7 @@ export function GeneralSettings() {
               </div>
 
               <div className="flex justify-end">
-                <Button type="submit" disabled={isSaving}>
+                <Button type="submit" disabled={isSaving || !ca}>
                   {isSaving ? "Saving..." : "Save Organization"}
                 </Button>
               </div>

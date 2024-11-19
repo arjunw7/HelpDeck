@@ -1,3 +1,42 @@
+/* Add text slide animation */
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.text-slide-container {
+  display: inline-flex;
+  flex-direction: column;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.text-slide {
+  animation: slideUp 0.5s ease forwards;
+}
+
+.text-slide-exit {
+  animation: slideDown 0.5s ease forwards;
+}
+
+
 /* Add bell shake animation */
 @keyframes bell-shake {
   0% { transform: rotate(0); }
